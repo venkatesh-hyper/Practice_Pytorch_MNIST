@@ -63,6 +63,9 @@ if uploaded_file is not None and model is not None:
             predicted_class = torch.argmax(prediction, dim=1).item()
 
         st.success(f"Prediction: The digit is {predicted_class}")
+        probs = torch.softmax(prediction, dim=1)
+    confidence = torch.max(probs).item()
+    st.info(f"Confidence: {confidence*100:.2f}%")
 elif model is None:
     st.warning("Model could not be loaded. Please ensure 'image_classifier.pt' exists.")
 
